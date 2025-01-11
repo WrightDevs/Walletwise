@@ -81,7 +81,7 @@
     // Google Authentication
     document.getElementById("googleLogin").addEventListener("click", function () {
       const provider = 'google'; // Social provider
-      const redirectUrl = 'your-redirect-url-here'; // Redirect URL after successful login
+      const redirectUrl = 'https://cloud.appwrite.io/v1'; // Redirect URL after successful login
 
       account.createOAuth2Session(provider, redirectUrl)
         .then(response => {

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="WalletWise - Your Ultimate Expense Tracker & Budget Manager">
+    <meta name="description" content="Take control of your finances with WalletWise. Track expenses, manage budgets, and save smarter. Simplify your financial journey with ease and precision!">
+    <meta name="keywords" content="Expense tracker, budget manager, financial planning, money management, saving app, personal finance, track expenses, budget tracker, WalletWise, finance app, expense manager">
+    <meta name="author" content="WaveX">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="WalletWise - Track Expenses & Manage Budgets">
+    <meta property="og:description" content="Your ultimate tool to simplify finances, track expenses, and save smarter.">
+    <meta property="og:image" content="https://walletwise.com/images/og-image.jpg">
+    <meta property="og:url" content="https://walletwise.com">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WalletWise - Track Expenses & Manage Budgets">
+    <meta name="twitter:description" content="Simplify your financial journey with WalletWise. Track expenses, manage budgets, and save smarter!">
+    <meta name="twitter:image" content="https://walletwise.com/images/twitter-image.jpg">
+    <meta name="twitter:site" content="@WalletWise">
+    <link rel="stylesheet" href="style.css">
+    <title>WalletWise - Your Ultimate Expense Tracker & Budget Manager</title>
+</head>
+<body>
+  
+  <div class="imageContainer">
+    <img src="/img/Loss-money.svg" alt="ehr" class="pic">
+  </div>
+  <h2>Calculate Smarter, <br> Spend Wiser</h2>
+  <div class="container">
+    <div class="accountButtons">
+      <button type="button" id="signIn"><img src="img/signin.svg" alt="adduser" class="icon">Signup</button>
+      <button type="button" id="logIn"><img src="img/login.svg" alt="login" class="icon">Login</button>
+      <div class="line-with-text">OR</div>
+      <div class="socialAccount">
+        <button type="button" id="googleLogin"><img src="img/google.svg" alt="Google" class="icon">Continue with Google</button>
+      </div>
+    </div>   
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/appwrite"></script>
+  <script>
+    // Initialize Appwrite client
+    const client = new Appwrite.Client();
+    client.setEndpoint("https://cloud.appwrite.io/v1").setProject("6782022a00153fd81229"); // Appwrite Cloud endpoint & project ID
+    
+    const account = new Appwrite.Account(client);
+
+    // Signup Function
+    document.getElementById("signIn").addEventListener("click", function () {
+      const email = prompt("Enter your email:"); // Get user email
+      const password = prompt("Enter your password:"); // Get user password
+
+      account.create("[USER_ID]", email, password)  // Replace with appropriate user ID if needed
+        .then(response => {
+          alert("Account created successfully!");
+        })
+        .catch(error => {
+          alert("Error: " + error.message);
+        });
+    });
+
+    // Login Function
+    document.getElementById("logIn").addEventListener("click", function () {
+      const email = prompt("Enter your email:");
+      const password = prompt("Enter your password:");
+      
+      account.createEmailSession(email, password)
+        .then(response => {
+          alert("Logged in successfully!");
+        })
+        .catch(error => {
+          alert("Error: " + error.message);
+        });
+    });
+
+    // Google Authentication
+    document.getElementById("googleLogin").addEventListener("click", function () {
+      const provider = 'google'; // Social provider
+      const redirectUrl = 'your-redirect-url-here'; // Redirect URL after successful login
+
+      account.createOAuth2Session(provider, redirectUrl)
+        .then(response => {
+          alert("Logged in with Google successfully!");
+        })
+        .catch(error => {
+          alert("Error: " + error.message);
+        });
+    });
+  </script>
+</body>
+</html>

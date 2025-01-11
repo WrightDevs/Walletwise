@@ -53,7 +53,9 @@ h2{
         .line-with-text:not(:empty)::after {
             margin-left: 10px;
         }
-        
+        a{
+            text-decoration:none;
+        }
         button{
           display: flex;
           align-items: center;

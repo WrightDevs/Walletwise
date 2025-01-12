@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAEUaYXgNfOlHzy7qQkFMZHsHpImpVRO54",
   authDomain: "walletwise2024.firebaseapp.com",
@@ -14,8 +15,10 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 auth.languageCode = 'en';
 
+// Email/Password Login
 document.getElementById('login-form').addEventListener('submit', async (e) => {
   e.preventDefault();
+
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
 
@@ -24,19 +27,17 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     alert(`Welcome back, ${userCredential.user.email}`);
     window.location.href = 'logged.html';
   } catch (error) {
-    alert(error.message);
+    let errorMessage;
+    switch (error.code) {
+      case 'auth/user-not-found':
+        errorMessage = 'No account found with this email.';
+        break;
+      case 'auth/wrong-password':
+        errorMessage = 'Incorrect password.';
+        break;
+      default:
+        errorMessage = 'An error occurred.';
+    }
+    alert(errorMessage);
   }
-});
-
-document.getElementById('continueGoogle').addEventListener('click', () => {
-  const provider = new GoogleAuthProvider();
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const user = result.user;
-      console.log(user);
-      window.location.href = 'dashboard.html';
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
 });
